@@ -1,6 +1,6 @@
 @echo off
 
-cd "D:\Users\subha\WebstormProjects\Piyush_Garg\scaleable-chat-nextjs-redis"
+cd "D:\Users\subha\WebstormProjects\Piyush_Garg\scaleable-chat-nextjs-redis-kafka-postgres"
 
 git add .
 git commit -m "%~1"
