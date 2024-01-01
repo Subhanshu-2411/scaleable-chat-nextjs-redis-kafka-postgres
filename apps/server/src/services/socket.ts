@@ -45,11 +45,11 @@ class SocketService {
             })
         });
 
-        sub.on('message', (channel, message) => {
+        sub.on('message', async (channel, message) => {
             if (channel === 'MESSAGES') {
                 console.log("New Message from Redis", message);
                 io.emit('message', message);
-                prismaClient.message.create({
+                await prismaClient.message.create({
                     data: {
                         text: message,
                     },
