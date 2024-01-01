@@ -1,5 +1,6 @@
 import { Server } from 'socket.io';
 import Redis from 'ioredis'
+// @ts-ignore
 import prismaClient from "./prisma";
 
 const pub = new Redis({
