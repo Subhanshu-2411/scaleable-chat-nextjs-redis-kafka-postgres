@@ -170,7 +170,11 @@ export default function Page() {
         </div>
         <div>
             {messages.map((e) => (
-                <li>{e}</li>
+                <li
+                    className={classes["text"]}
+                >
+                    {e}
+                </li>
             ))}
         </div>
       </div>

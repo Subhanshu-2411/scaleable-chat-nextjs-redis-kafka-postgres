@@ -1,5 +1,6 @@
 import { Server } from 'socket.io';
 import Redis from 'ioredis'
+import {createProducer, produceMessage} from "./kafka";
 // @ts-ignore
 import prismaClient from "./prisma";
 
@@ -7,15 +8,13 @@ const pub = new Redis({
     host: 'redis-13c54108-pg-chat-app.a.aivencloud.com',
     port: 12388,
     username: 'default',
-    password: 'AVNS_FN0U-SeHK1cp0v34V8B',
-    maxRetriesPerRequest: 100
+    password: 'AVNS_FN0U-SeHK1cp0v34V8B'
 });
 const sub = new Redis({
     host: 'redis-13c54108-pg-chat-app.a.aivencloud.com',
     port: 12388,
     username: 'default',
-    password: 'AVNS_FN0U-SeHK1cp0v34V8B',
-    maxRetriesPerRequest:100
+    password: 'AVNS_FN0U-SeHK1cp0v34V8B'
 });
 
 class SocketService {
@@ -50,11 +49,13 @@ class SocketService {
             if (channel === 'MESSAGES') {
                 console.log("New Message from Redis", message);
                 io.emit('message', message);
-                await prismaClient.message.create({
-                    data: {
-                        text: message,
-                    },
-                });
+                // await prismaClient.message.create({
+                //     data: {
+                //         text: message,
+                //     },
+                // });
+                await produceMessage(message);
+                console.log("Message Produced to Kafka Broker");
             }
         });
     }
